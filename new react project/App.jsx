@@ -1,8 +1,130 @@
-import "./styles.css";
-import Questlog from "./Questlog.js";
+import React, { useState, useEffect } from "react";
+import Quest from "./components/Quest";
+import Navbar from "./components/Navbar";
+import TemporaryModal from "./components/AddQuest";
+import QuestLog from "./components/QuestLog";
+
+
+
 
 export default function App() {
+    const [quests, setQuests] = useState([]);
+    const [name, setName] = useState("");
+    const [description, setDescription] = useState("");
+    const [date, setDate] = useState(null);
+    const [points, setPoints] = useState(null);
+    const [category, setCategory] = useState("");
+    const [status, setStatus] = useState("");
+    const [allPoints, setAllPoints] = useState([]);
+    const [modalOpen, setModalOpen] = React.useState({
+      top: false,
+      left: false,
+      bottom: false,
+      right: false
+    });
+
+
+    async function deleteQuest(questId) {
+      try {
+        const response = await fetch(`https://63ae0cc8ceaabafcf17221ae.mockapi.io/TaskForm/${questId}`, {
+          method: 'DELETE'
+        });
+        const data = await response.json();
+        console.log(data);
+        setQuests(quests.filter(quest => quest.id !== questId));
+      } catch (error) {
+        console.error("Deletion Failed");
+      }
+
+    }
+
+    async function editQuest(questId) {
+        const prevQuest = {
+            name: name,
+            description: description,
+            date: date,
+            points: points,
+            category: category,
+            status: status
+        };
+
+        try {
+            const response = await fetch('https://63ae0cc8ceaabafcf17221ae.mockapi.io/TaskForm/${questId}',
+                {
+                    method: 'PUT',
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(prevQuest)
+                });
+            const data = await response.json();
+            console.log(data);
+        }
+        catch (error) {
+            console.log("Edit Failed");
+        }
+    }
+
+    useEffect(() => {
+        fetch("https://63ae0cc8ceaabafcf17221ae.mockapi.io/TaskForm")
+            .then((res) => res.json())
+            .then((data) => setQuests(data))
+    }, [quests]);
+
+    const totalPoints = quests.reduce((sum, quest) => sum + Number(quest.points), 0);
+
+    const questList = quests.map((item) => (
+        <Quest
+            name={item.name}
+            description={item.description}
+            points={item.points}
+            key={item.id}
+            category={item.category}
+            date={item.date}
+            id={item.id}
+            deleteQuest={deleteQuest}
+            editQuest={editQuest}
+        />
+    ));
+
     return (
-        <Questlog />
+      <div className="App">
+        <Navbar 
+        
+        points={totalPoints} 
+        
+        />
+
+        <TemporaryModal
+          questList={questList}
+          name={name}
+          setName={setName}
+          description={description}
+          setDescription={setDescription}
+          date={date}
+          setDate={setDate}
+          points={points}
+          setPoints={setPoints}
+          category={category}
+          setCategory={setCategory}
+          allPoints={allPoints}
+          modalOpen={modalOpen}
+          setModalOpen={setModalOpen}
+        />
+
+        <QuestLog
+          name={name}
+          description={description}
+          date={date}
+          points={points}
+          category={category}
+          allPoints={allPoints}
+          questList={questList}
+          modalOpen={modalOpen}
+          setModalOpen={setModalOpen}
+        />
+
+
+      </div>
     )
 }
