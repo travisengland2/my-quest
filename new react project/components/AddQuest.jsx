@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { Box, styled } from '@mui/system';
@@ -132,38 +132,24 @@ const style = (theme) => ({
 });
 
 export default function TemporaryModal(props) {
-
-  const toggleModal = (anchor, open) => (event) => {
-    if (
-      event.type === "keydown" &&
-      (event.key === "Tab" || event.key === "Shift")
-    ){
-      return;
-    }
-    props.setModalOpen({ ...props.modalOpen, [anchor]: open });
-
-  };
-
-  const handleClose = () => {
-    props.setModalOpen(false);
-  };
+  const [open, setOpen] = useState(false);
+  const handleClose = () => setOpen(false);
+  const handleOpen = () => setOpen(true);
 
   const handleClick = () => {
 
     props.createNewQuest();
-    props.setModalOpen(false);
-    props.setDate(undefined);
+    setOpen(false);
   };
 
   const list = (anchor) => (
     <Box role="presentation" sx={style}>
       {props.name &&
       props.description && 
-      props.date &&
       props.points &&
       props.category ? (
         <div className="modal-header">
-          <button onClick={toggleModal(anchor, false)} className="cancel-button">
+          <button onClick={handleClose} className="cancel-button">
             Cancel
           </button>
           <ColorButton
@@ -186,7 +172,12 @@ export default function TemporaryModal(props) {
       <div className="modal-body">
         <div className="form-card">
           <div className="form-card-header">
-            <Typography variant="h5" gutterBottom sx={{ ml: 1, color: '#1976d2' }}>
+            <Typography 
+            variant="h5" 
+            gutterBottom 
+            sx={{ ml: 1, color: '#1976d2' }}
+            onChange={(event) => props.setStatus("incomplete")}
+            >
               A New Quest
             </Typography>
           </div>
@@ -229,16 +220,6 @@ export default function TemporaryModal(props) {
               required
               sx={{ m: 1, mb: 2 }}
             />
-            <input
-              id="date"
-              label="Date"
-              variant="outlined"
-              onChange={(event) => props.setDate(event.target.value)}
-              required
-              type="date"
-              className="date-picker"
-              value={props.date}
-            />
           </form>
         </div>
       </div>
@@ -248,19 +229,15 @@ export default function TemporaryModal(props) {
   return (
     <div className="addtask-button">
        <React.Fragment key={"right"}>
-        <Button
-          color="secondary"
-          variant="text"
-          onClick={toggleModal("right", true)}
-        >
-          Add Task
-        </Button>
+       <Button variant="text" onClick={handleOpen} color="secondary">
+                Add Quest
+            </Button>
           <Modal className="modal"
             aria-labelledby="transition-modal-title"
             aria-describedby="transition-modal-description"
             anchor={"right"}
-            open={props.modalOpen}
-            onClose={toggleModal(false)}
+            open={open}
+            onClose={handleClose}
             closeAfterTransition
             slots={{ backdrop: Backdrop }}
           >
