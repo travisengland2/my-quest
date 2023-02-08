@@ -1,96 +1,102 @@
 import React, { useState } from "react";
-import PropTypes from 'prop-types';
-import clsx from 'clsx';
-import { Box, styled } from '@mui/system';
-import ModalUnstyled from '@mui/base/ModalUnstyled';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import TextField from '@mui/material/TextField';
-import FormControl from '@mui/material/FormControl';
-import InputLabel from '@mui/material/InputLabel';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
-import OutlinedInput from '@mui/material/OutlinedInput';
+import PropTypes from "prop-types";
+import clsx from "clsx";
+import { Box, styled } from "@mui/system";
+import ModalUnstyled from "@mui/base/ModalUnstyled";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import TextField from "@mui/material/TextField";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import CloseIcon from '@mui/icons-material/Close';
+import IconButton from "@mui/material/IconButton";
+import SaveAsIcon from '@mui/icons-material/SaveAs';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 const CssTextField = styled(TextField)({
-  '& label.Mui-focused': {
-      color: '#1976d2',
+  "& label.Mui-focused": {
+    color: "#1976d2"
   },
-  '& .MuiInput-underline:after': {
-      borderBottomColor: '#1976d2',
+  "& .MuiInput-underline:after": {
+    borderBottomColor: "#1976d2"
   },
-  '& .MuiOutlinedInput-root': {
-      '& fieldset': {
-          borderColor: '#0d47a1',
-      },
-      '&:hover fieldset': {
-          borderColor: '#2196f3',
-      },
-      '&.Mui-focused fieldset': {
-          borderColor: '#1976d2',
-      },
-  },
+  "& .MuiOutlinedInput-root": {
+    "& fieldset": {
+      borderColor: "#0d47a1"
+    },
+    "&:hover fieldset": {
+      borderColor: "#2196f3"
+    },
+    "&.Mui-focused fieldset": {
+      borderColor: "#1976d2"
+    }
+  }
 });
 
 const CssFormControl = styled(FormControl)({
-  '& label.Mui-focused': {
-      color: '#1976d2',
+  "& label.Mui-focused": {
+    color: "#1976d2"
   },
-  '& .MuiInput-underline:after': {
-      borderBottomColor: '#1976d2',
+  "& .MuiInput-underline:after": {
+    borderBottomColor: "#1976d2"
   },
-  '& .MuiOutlinedInput-root': {
-      '& fieldset': {
-          borderColor: '#0d47a1',
-      },
-      '&:hover fieldset': {
-          borderColor: '#2196f3',
-      },
-      '&.Mui-focused fieldset': {
-          borderColor: '#1976d2',
-      },
-  },
+  "& .MuiOutlinedInput-root": {
+    "& fieldset": {
+      borderColor: "#0d47a1"
+    },
+    "&:hover fieldset": {
+      borderColor: "#2196f3"
+    },
+    "&.Mui-focused fieldset": {
+      borderColor: "#1976d2"
+    }
+  }
 });
 
 const QuestPoints = styled(TextField)({
-  '& label.Mui-focused': {
-      color: '#1976d2',
+  "& label.Mui-focused": {
+    color: "#1976d2"
   },
-  '& .MuiInput-underline:after': {
-      borderBottomColor: '#1976d2',
+  "& .MuiInput-underline:after": {
+    borderBottomColor: "#1976d2"
   },
-  '& .MuiOutlinedInput-root': {
-      '& fieldset': {
-          borderColor: '#0d47a1',
-      },
-      '&:hover fieldset': {
-          borderColor: '#2196f3',
-      },
-      '&.Mui-focused fieldset': {
-          borderColor: '#1976d2',
-      },
-  },
+  "& .MuiOutlinedInput-root": {
+    "& fieldset": {
+      borderColor: "#0d47a1"
+    },
+    "&:hover fieldset": {
+      borderColor: "#2196f3"
+    },
+    "&.Mui-focused fieldset": {
+      borderColor: "#1976d2"
+    }
+  }
 });
 
 const ColorButton = styled(Button)({
-  backgroundColor: '#2196f3', '&:hover': { backgroundColor: '#1976d2' },
-},
-);
+  backgroundColor: "#2196f3",
+  "&:hover": { backgroundColor: "#1976d2" }
+});
 
 const BackdropUnstyled = React.forwardRef((props, ref) => {
   const { open, className, ...other } = props;
   return (
-      <div
-          className={clsx({ 'MuiBackdrop-open': open }, className)}
-          ref={ref}
-          {...other}
-      />
+    <div
+      className={clsx({ "MuiBackdrop-open": open }, className)}
+      ref={ref}
+      {...other}
+    />
   );
 });
 
 BackdropUnstyled.propTypes = {
   className: PropTypes.string.isRequired,
-  open: PropTypes.bool,
+  open: PropTypes.bool
 };
 
 const Modal = styled(ModalUnstyled)`
@@ -117,18 +123,17 @@ const Backdrop = styled(BackdropUnstyled)`
 `;
 
 const style = (theme) => ({
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    backgroundColor: theme.palette.mode === 'dark' ? '#0A1929' : 'white',
-    border: '1px solid currentColor',
-    boxShadow: 24,
-    padding: '16px 32px 24px 32px',
-    borderRadius: '8px',
-    display: 'flex',
-    flexDirection: 'column'
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  backgroundColor: theme.palette.mode === "dark" ? "#0A1929" : "white",
+  border: "1px solid currentColor",
+  boxShadow: 24,
+  padding: "16px 32px 24px 32px",
+  borderRadius: "8px",
+  display: "flex",
+  flexDirection: "column",
 });
 
 export default function TemporaryModal(props) {
@@ -137,46 +142,25 @@ export default function TemporaryModal(props) {
   const handleOpen = () => setOpen(true);
 
   const handleClick = () => {
-
     props.createNewQuest();
     setOpen(false);
   };
 
   const list = (anchor) => (
     <Box role="presentation" sx={style}>
-      {props.name &&
-      props.description && 
-      props.points &&
-      props.category ? (
-        <div className="modal-header">
-          <button onClick={handleClose} className="cancel-button">
-            Cancel
-          </button>
-          <ColorButton
-            sx={{ m: 1, color: 'white', mb: 2 }}
-            onClick={handleClick}
-            className="save-button"
-            variant="contained"
-          >
-            Create Task
-          </ColorButton>
-        </div>
-      ) : (
-        <div className="modal-header-empty">
-          <button onClick={handleClose} className="close-button">
-            Close
-          </button>
-        </div>
-      )}
-
+     <div className="modal-header">
+        <IconButton onClick={handleClose} className="close-button">
+          <CloseIcon />
+        </IconButton>
+      </div>
       <div className="modal-body">
         <div className="form-card">
           <div className="form-card-header">
-            <Typography 
-            variant="h5" 
-            gutterBottom 
-            sx={{ ml: 1, color: '#1976d2' }}
-            onChange={(event) => props.setStatus("incomplete")}
+            <Typography
+              variant="h5"
+              gutterBottom
+              sx={{ ml: 1, color: "#1976d2" }}
+              onChange={(event) => props.setStatus("incomplete")}
             >
               A New Quest
             </Typography>
@@ -187,20 +171,23 @@ export default function TemporaryModal(props) {
               id="custom-css-outlined-input"
               onChange={(event) => props.setName(event.target.value)}
               required
-              sx={{ m: 1 }}
+              sx={{ m: 1, width: 300 }}
             />
             <CssTextField
               id="outlined-multiline-flexible"
               label="Quest Description"
               multiline
-              maxRows={4}    
+              maxRows={4}
               onChange={(event) => props.setDescription(event.target.value)}
-              sx={{ m: 1, mb: 2 }}
+              sx={{ m: 1, mb: 2, width: 300 }}
             />
-            <CssFormControl className="form-control" sx={{ m: 1, mb: 2 }}>
-              <InputLabel id="demo-simple-select-label">Quest Category</InputLabel>
+            <CssFormControl className="form-control" sx={{ m: 1, mb: 2, width: 300}}>
+              <InputLabel id="demo-simple-select-label">
+                Quest Category
+              </InputLabel>
               <Select
                 labelId="demo-simple-select-label"
+              
                 id="demo-simple-select"
                 onChange={(event) => props.setCategory(event.target.value)}
                 input={<OutlinedInput label="Quest Category" />}
@@ -218,32 +205,38 @@ export default function TemporaryModal(props) {
               type="number"
               onChange={(event) => props.setPoints(event.target.value)}
               required
-              sx={{ m: 1, mb: 2 }}
+              sx={{ m: 1, mb: 2, width: 300 }}
             />
-          </form>
+        </form>
         </div>
+      </div>
+      <div className="modal-footer">
+      <Button variant="contained" endIcon={<SaveAsIcon />} onClick={handleClick}  sx={{ m:1, width: 300, height: 50}}>
+        Save New Quest
+      </Button>
       </div>
     </Box>
   );
 
   return (
     <div className="addtask-button">
-       <React.Fragment key={"right"}>
-       <Button variant="text" onClick={handleOpen} color="secondary">
-                Add Quest
-            </Button>
-          <Modal className="modal"
-            aria-labelledby="transition-modal-title"
-            aria-describedby="transition-modal-description"
-            anchor={"right"}
-            open={open}
-            onClose={handleClose}
-            closeAfterTransition
-            slots={{ backdrop: Backdrop }}
-          >
-            {list("right")}
-          </Modal>
-        </React.Fragment>
-      </div>
+      <React.Fragment key={"right"}>
+        <Button variant="text" onClick={handleOpen} color="primary" className="add-quest">
+          Add Quest
+        </Button>
+        <Modal
+          className="modal"
+          aria-labelledby="transition-modal-title"
+          aria-describedby="transition-modal-description"
+          anchor={"right"}
+          open={open}
+          onClose={handleClose}
+          closeAfterTransition
+          slots={{ backdrop: Backdrop }}
+        >
+          {list("right")}
+        </Modal>
+      </React.Fragment>
+    </div>
   );
 }
