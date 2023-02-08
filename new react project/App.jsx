@@ -3,15 +3,18 @@ import Quest from "./components/Quest";
 import Navbar from "./components/Navbar";
 import TemporaryModal from "./components/AddQuest";
 import QuestLog from "./components/QuestLog";
+import './styles.css'
 
 
 
 
 export default function App() {
     const [quests, setQuests] = useState([]);
-    const [name, setName] = useState("");
-    const [description, setDescription] = useState("");
     const [points, setPoints] = useState(null);
+    const [name, setName] = useState("");
+    const [date, setDate] = useState(null);
+    const [description, setDescription] = useState("");
+    
     const [category, setCategory] = useState("");
     const [status, setStatus] = useState("");
     const [allPoints, setAllPoints] = useState([]);
@@ -24,9 +27,10 @@ export default function App() {
 
     function createNewQuest() {
       const newQuest = {
-        name: name,
-        description: description,
         points: points,
+        name: name,
+        date: date,
+        description: description,
         category: category,
         status: status
       };
@@ -107,6 +111,7 @@ export default function App() {
             key={item.id}
             category={item.category}
             id={item.id}
+            date={item.date}
             deleteQuest={deleteQuest}
             editQuest={editQuest}
             status={item.status}
@@ -125,6 +130,8 @@ export default function App() {
           questList={questList}
           name={name}
           setName={setName}
+          date={date}
+          setDate={setDate}
           description={description}
           setDescription={setDescription}
           points={points}
@@ -139,16 +146,7 @@ export default function App() {
           createNewQuest={createNewQuest}
         />
 
-        <QuestLog
-          name={name}
-          description={description}
-          points={points}
-          category={category}
-          allPoints={allPoints}
-          questList={questList}
-          modalOpen={modalOpen}
-          setModalOpen={setModalOpen}
-        />
+        <QuestLog/>
 
 
       </div>
