@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar";
 import TemporaryModal from "./components/AddQuest";
 import QuestLog from "./components/QuestLog";
 import './styles.css'
+import SignIn from "./SignIn.js";
 
 
 
@@ -24,6 +25,17 @@ export default function App() {
       bottom: false,
       right: false
     });
+
+    const [isSignedIn, setIsSignedIn] = useState(false);
+
+    const handleSignIn = () => {
+        setIsSignedIn(true);
+    };
+
+    const handleSignOut = () => {
+        setIsSignedIn(false);
+    };
+
 
     function createNewQuest() {
       const newQuest = {
@@ -119,9 +131,13 @@ export default function App() {
     ));
 
     return (
+      <div className={`screen ${isSignedIn ? 'fade-out' : 'fade-in'}`}>
+            {!isSignedIn ? (
+                <SignIn handleSignIn={handleSignIn} />
+            ) : (
       <div className="App">
         <Navbar 
-        
+        handleSignOut={handleSignOut}
         points={totalPoints} 
         
         />
@@ -146,9 +162,11 @@ export default function App() {
           createNewQuest={createNewQuest}
         />
 
-        <QuestLog/>
+        <QuestLog />
 
 
       </div>
-    )
+     )}
+     </div>
+  )
 }
