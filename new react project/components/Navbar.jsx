@@ -8,7 +8,7 @@ import Typography from "@mui/material/Typography";
 import InputBase from "@mui/material/InputBase";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
-import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
