@@ -121,14 +121,12 @@ function CustomPagination() {
     />
   );
 }
-
-
 const columns = [
   {
     field: 'actions',
     type: 'actions',
     width: 120,
-    getActions: (params) => [
+    getActions: (props) => [
       <GridActionsCellItem
         icon={<DoneIcon />}
         label="Finish" 
@@ -139,9 +137,15 @@ const columns = [
       />,
       <GridActionsCellItem
         icon={<DeleteIcon />}
-        label="Delete" 
+        label="Delete"
       />,
     ]
+  },
+  {
+    field: 'name', 
+    headerName: 'Name',
+    type: 'string',
+    width: 150
   },
   {
     field: 'points',
@@ -150,14 +154,8 @@ const columns = [
     width: 100,
     headerAlign: 'center',
     align: 'center'
-    
   },
-  {
-    field: 'name', 
-    headerName: 'Name',
-    type: 'string',
-    width: 150
-  },
+
   {
     field: 'date',
     headerName: 'Date Created',
@@ -173,7 +171,8 @@ const columns = [
   {
     field: 'category',
     headerName: 'Category',
-    type: 'string'
+    type: 'string', 
+    align: 'center'
   },
 
 
@@ -197,6 +196,14 @@ export default function QuestLog() {
       rowsPerPageOptions={[5]}
       components={{
         Pagination: CustomPagination,
+      }}
+      sx={{
+        boxShadow: 2,
+        border: 2,
+        borderColor: 'primary.light',
+        '& .MuiDataGrid-cell:hover': {
+          color: 'primary.main',
+        },
       }}
     />
   </div>
