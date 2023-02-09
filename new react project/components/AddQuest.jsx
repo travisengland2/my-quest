@@ -14,9 +14,6 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from "@mui/material/IconButton";
 import SaveAsIcon from '@mui/icons-material/SaveAs';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 const CssTextField = styled(TextField)({
   "& label.Mui-focused": {
@@ -76,11 +73,6 @@ const QuestPoints = styled(TextField)({
       borderColor: "#1976d2"
     }
   }
-});
-
-const ColorButton = styled(Button)({
-  backgroundColor: "#2196f3",
-  "&:hover": { backgroundColor: "#1976d2" }
 });
 
 const BackdropUnstyled = React.forwardRef((props, ref) => {
@@ -144,6 +136,8 @@ export default function TemporaryModal(props) {
   const handleClick = () => {
     props.createNewQuest();
     setOpen(false);
+    props.setDate(undefined);
+    props.setStatus('incomplete');
   };
 
   const list = (anchor) => (
@@ -160,7 +154,6 @@ export default function TemporaryModal(props) {
               variant="h5"
               gutterBottom
               sx={{ ml: 1, color: "#1976d2" }}
-              onChange={(event) => props.setStatus("incomplete")}
             >
               A New Quest
             </Typography>
@@ -187,7 +180,7 @@ export default function TemporaryModal(props) {
               </InputLabel>
               <Select
                 labelId="demo-simple-select-label"
-              
+                defaultValue=''
                 id="demo-simple-select"
                 onChange={(event) => props.setCategory(event.target.value)}
                 input={<OutlinedInput label="Quest Category" />}
