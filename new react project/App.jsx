@@ -141,7 +141,7 @@ export default function App() {
         points={totalPoints} 
         
         />
-
+      <div className='quest-log-wrapper'>
         <TemporaryModal
           questList={questList}
           name={name}
@@ -161,8 +161,8 @@ export default function App() {
           setStatus={setStatus}
           createNewQuest={createNewQuest}
         />
-
         <QuestLog />
+      </div>
 
 
       </div>
